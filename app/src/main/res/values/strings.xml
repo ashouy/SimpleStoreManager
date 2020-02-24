@@ -18,4 +18,7 @@
     <string name="clients_menu">Clients</string>
     <string name="settings_menu">Settings</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
