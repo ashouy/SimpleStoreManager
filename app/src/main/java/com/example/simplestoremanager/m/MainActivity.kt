@@ -3,21 +3,29 @@ package com.example.simplestoremanager.m
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simplestoremanager.R
 import com.example.simplestoremanager.m.clients.Client_fragment
+import com.example.simplestoremanager.m.products.AddProductFragment
+import com.example.simplestoremanager.m.products.Product
+import com.example.simplestoremanager.m.products.ProductAdapter
 import com.example.simplestoremanager.m.products.Product_fragment
 import com.example.simplestoremanager.m.settings.Settings_fragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_product.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
     lateinit var drawer: DrawerLayout
     lateinit var toggle: ActionBarDrawerToggle
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +53,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Product_fragment()
             ).commit()
             nav_view.setCheckedItem(R.id.products_menu)
+        }
+
+
+        val add_product = add_product
+
+        add_product.setOnClickListener() {
+            supportFragmentManager.beginTransaction().setCustomAnimations(
+                R.anim.enter_to_right,
+                R.anim.exit_to_right,
+                R.anim.enter_to_right,
+                R.anim.exit_to_right
+            ).addToBackStack(null)
+                .add(R.id.fragmaent_Container, AddProductFragment(), "add_product_fragment")
+                .commit()
+
+            drawer.closeDrawer(GravityCompat.START)
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         }
     }
 

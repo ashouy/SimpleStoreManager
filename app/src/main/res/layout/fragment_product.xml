@@ -3,12 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".m.products.Product_fragment">
+    xmlns:CustomView="http://schemas.android.com/apk/res-auto">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/product_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="products" />
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        tools:listitem="@layout/layout_product" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_product"
+        android:layout_width="@dimen/cardview_default_elevation"
+        android:layout_gravity="bottom|end"
+        android:layout_height="@dimen/cardview_default_elevation"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_circle_black_24dp"
+        android:contentDescription="@string/add_product"
+        />
+
 
 </FrameLayout>
