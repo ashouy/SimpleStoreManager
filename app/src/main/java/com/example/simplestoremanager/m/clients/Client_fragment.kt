@@ -14,6 +14,7 @@ import com.example.simplestoremanager.R
  */
 class Client_fragment : Fragment() {
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
