@@ -2,6 +2,7 @@ package com.example.simplestoremanager.m
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -24,7 +25,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var drawer: DrawerLayout
     lateinit var toggle: ActionBarDrawerToggle
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,23 +55,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             nav_view.setCheckedItem(R.id.products_menu)
         }
 
-
-        val add_product = add_product
-
         add_product.setOnClickListener() {
-            supportFragmentManager.beginTransaction().setCustomAnimations(
-                R.anim.enter_to_right,
-                R.anim.exit_to_right,
-                R.anim.enter_to_right,
-                R.anim.exit_to_right
-            ).addToBackStack(null)
-                .add(R.id.fragmaent_Container, AddProductFragment(), "add_product_fragment")
-                .commit()
 
-            drawer.closeDrawer(GravityCompat.START)
-            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            with(supportFragmentManager.beginTransaction()) {
+                setCustomAnimations(
+                    R.anim.enter_to_right,
+                    R.anim.exit_to_right,
+                    R.anim.enter_to_right,
+                    R.anim.exit_to_right
+                )
+//                    .replace(R.id.fragmaent_Container, AddProductFragment(), "add_product_fragment")
+//                    .commit()
+                addToBackStack(null)
+                    .add(R.id.fragmaent_Container, AddProductFragment(), "add_product_fragment")
+                    .commit()
+            }
+            tool_bar
+//            drawer.closeDrawer(GravityCompat.START)
+//            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         }
     }
+
 
     override fun onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START))

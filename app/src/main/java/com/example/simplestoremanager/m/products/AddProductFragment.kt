@@ -2,6 +2,7 @@ package com.example.simplestoremanager.m.products
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ class AddProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        Log.i("transaction","trocou")
         return inflater.inflate(R.layout.fragment_add_product, container, false)
     }
 
