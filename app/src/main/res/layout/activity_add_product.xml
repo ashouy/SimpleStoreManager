@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    android:orientation="vertical"
+    tools:context=".m.products.AddProductActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:layout_marginTop="30sp"
+        android:text="@string/insert_product_name"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/product_name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:hint="@string/exemple_product_name"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:layout_marginTop="30sp"
+        android:text="@string/product_quant"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/product_amount_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:hint="@string/exemple_product_amount"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:layout_marginTop="30sp"
+        android:text="@string/product_price"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/product_price_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:hint="@string/exemple_product_price"
+        android:textSize="20dp" />
+
+    <Button
+        android:layout_marginTop="30sp"
+        android:id="@+id/bt_save_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_product"
+        />
+    <Button
+        android:layout_marginTop="10sp"
+        android:id="@+id/bt_cancel_save_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_save_product"/>
+
+</LinearLayout>
