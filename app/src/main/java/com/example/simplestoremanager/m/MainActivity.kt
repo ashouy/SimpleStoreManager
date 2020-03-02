@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.example.simplestoremanager.R
 import com.example.simplestoremanager.m.clients.Client_fragment
 import com.example.simplestoremanager.m.products.AddProductActivity
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var productDataBase: DatabaseReference
+    lateinit private var productDataBase: DatabaseReference
     lateinit var drawer: DrawerLayout
     lateinit var toggle: ActionBarDrawerToggle
     val products = ArrayList<Product>()
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        productDataBase = FirebaseDatabase.getInstance().getReference("Product")
+        productDataBase = FirebaseDatabase.getInstance().getReference()
 
         var tool_bar = main_tool_bar
         setSupportActionBar(tool_bar)
@@ -51,14 +52,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer.addDrawerListener(toggle)
 
         toggle.syncState()
-        if (savedInstanceState == null) {
+
+        getProducts()
+
+        replace(true)
+    }
+
+    private fun replace(product: Boolean){
+        if(product) {
             supportFragmentManager.beginTransaction().replace(
                 R.id.fragmaent_Container,
                 Product_fragment(products)
             ).commit()
-            nav_view.setCheckedItem(R.id.products_menu)
+        }else
+        {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.fragmaent_Container,
+                Client_fragment(/*Clients*/)
+            ).commit()
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -66,45 +78,44 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var b = data?.getBundleExtra("PARAMS")
         when (resultCode) {
             Activity.RESULT_OK -> {
-                saveProducOnFireBase(
+                saveNewProduct(
                     b!!.getString("NAME", "default"),
                     b.getString("AMOUNT", "deafult"),
                     b.getString("PRICE", "default")
                 )
-                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show()
+                getProducts()
+                replace(true)
             }
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        productDataBase.addValueEventListener(object : ValueEventListener {
+    private fun getProducts() {
+        val productQuery = productDataBase.child("Products")
+
+        productQuery.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
+                Log.i("cancel", "canceled")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
                 products.clear()
-
-                if(p0.exists()){
-                    p0.children.forEach{
-                        var product: Product = it.getValue(Product::class.java)!!
-                        products.add(product)
+                if (p0.exists()) {
+                    for (child in p0.children) {
+                        var product = child.getValue(Product::class.java)
+                        products.add(product!!)
+                        Log.i("listt", "name: " + product.name)
+                        Log.i("listt", "amount: " + product.quant)
                     }
                 }
-//                for (child in p0.children) {
-//                    var product: Product = child.getValue(Product::class.java)!!
-//                    products.add(product)
-//                }
-                Log.i("database", "atualizado")
             }
         })
     }
 
-    private fun saveProducOnFireBase(name: String, amount: String, price: String) {
-        var id = productDataBase.push().key.toString()
+    private fun saveNewProduct(name: String, amount: String, price: String) {
+        var id = productDataBase.push().key
         var p = Product(id, name, amount, price)
-        productDataBase.child(id.toString()).setValue(p)
-        onStart()
+        productDataBase.child("Products").child(id!!).setValue(p)
+        Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show()
     }
 
 
@@ -118,16 +129,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when (p0.itemId) {
             R.id.products_menu -> (
-                    supportFragmentManager.beginTransaction().replace(
-                        R.id.fragmaent_Container,
-                        Product_fragment(products)
-                    ).commit()
+                    replace(true)
                     )
             R.id.clients_menu -> (
-                    supportFragmentManager.beginTransaction().replace(
-                        R.id.fragmaent_Container,
-                        Client_fragment()
-                    ).commit()
+                    replace(false)
                     )
             R.id.setting_menu -> (
                     supportFragmentManager.beginTransaction().replace(
