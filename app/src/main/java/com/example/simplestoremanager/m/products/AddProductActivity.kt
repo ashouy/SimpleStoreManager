@@ -1,5 +1,6 @@
 package com.example.simplestoremanager.m.products
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,14 +10,16 @@ import com.example.simplestoremanager.m.MainActivity
 import kotlinx.android.synthetic.main.activity_add_product.*
 
 class AddProductActivity : AppCompatActivity() {
-        lateinit var productName: String
-        lateinit var productQuant: String
-        lateinit var productPrice: String
+//        lateinit var productName: String
+//        lateinit var productQuant: String
+//        lateinit var productPrice: String
+    @SuppressLint("ResourceType")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
-        actionBar?.setTitle("@String/add_product")
-
+        var toolbar = add_product_tool_bar
+        toolbar.setTitle(R.string.add_product_toolbar_title)
 
         bt_save_product.setOnClickListener {
             var i = Intent(this,MainActivity ::class.java)

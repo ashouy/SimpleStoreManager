@@ -29,5 +29,8 @@
     <string name="exemple_product_price">exp(337,00)</string>
     <string name="save_product">Save</string>
     <string name="cancel_save_product">Cancel</string>
+    <string name="add_product_toolbar_title">Add Product</string>
+    <string name="saved">Saved !</string>
+
 
 </resources>
